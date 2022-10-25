@@ -1,3 +1,32 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="contenido">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+    <ion-list lines="none">
+      <ion-menu-toggle>
+        <ion-item button routerLink="home" routerLinkActive="seleccionado">
+          <ion-icon name="home" slot="start"></ion-icon>
+          <ion-label>Inicio</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item button routerLink="libros" routerLinkActive="seleccionado"> 
+          <ion-icon name="book" slot="start"></ion-icon>
+          <ion-label>Libros</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item button routerLink="autores" routerLinkActive="seleccionado">
+          <ion-icon name="people" slot="start"></ion-icon>
+          <ion-label>Autores</ion-label>
+        </ion-item>
+      </ion-menu-toggle>     
+    </ion-list>  
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="contenido"></ion-router-outlet>
 </ion-app>
