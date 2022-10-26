@@ -4,9 +4,23 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>libros</ion-title>
+    <ion-progress-bar *ngIf="cargandoLibros" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarLibros()">
+    <ion-refresher-content></ion-refresher-content>
 
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let libro of listaLibros">
+      <ion-note slot="start">{{ libro.id }}</ion-note>
+      <ion-label>
+        <h2>{{ libro.titulo }}</h2>
+       <p>{{ libro.autor }}</p> 
+      </ion-label>
+      <ion-badge slot="end">{{ libro.paginas }} pag.</ion-badge>
+    </ion-item>
+  </ion-list>
 </ion-content>
