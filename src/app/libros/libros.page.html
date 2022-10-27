@@ -8,19 +8,47 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="nuevo()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-refresher slot="fixed" (ionRefresh)="cargarLibros()">
     <ion-refresher-content></ion-refresher-content>
-
   </ion-refresher>
+
+
   <ion-list>
     <ion-item *ngFor="let libro of listaLibros">
       <ion-note slot="start">{{ libro.id }}</ion-note>
       <ion-label>
         <h2>{{ libro.titulo }}</h2>
-       <p>{{ libro.autor }}</p> 
+        <p>{{ libro.autor }}</p>
       </ion-label>
-      <ion-badge slot="end">{{ libro.paginas }} pag.</ion-badge>
+      <ion-badge color="medium" slot="end">{{ libro.paginas }} pag.</ion-badge>
     </ion-item>
   </ion-list>
+
+  <ion-modal [isOpen]="modalVisible" (didDismiss)="modalVisible = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Registrar Libro</ion-title>
+          <ion-buttons slot="end" (click)="modalVisible = false">
+            <ion-button>Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <div style="padding: 10px;">
+          <app-formulario-libro></app-formulario-libro>
+        </div>
+      </ion-content>
+
+    </ng-template>
+  </ion-modal>
 </ion-content>

@@ -1,0 +1,32 @@
+<ion-list>
+  <ion-item>
+    <ion-label>Codigo:</ion-label>
+    <ion-input inputmode="number" placeholder="Ingresar..." slot="end" [(ngModel)]="id"></ion-input>
+    <ion-note *ngIf="!idValidado" slot="helper" color="danger">Ingrese un código</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Titulo:</ion-label>
+    <ion-input inputmode="text" placeholder="Ingresar..." slot="end" [(ngModel)]="titulo"></ion-input>
+    <ion-note *ngIf="!tituloValidado" slot="helper" color="danger">Ingrese un titulo</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Autor:</ion-label>
+    <ion-select placeholder="Seleccionar..." [(ngModel)]="idautor">
+      <ion-select-option *ngFor="let autor of listaAutores" [value]="autor.id">{{ autor.nombre }}</ion-select-option>
+    </ion-select>
+    <ion-note *ngIf="!idautorValidado" slot="helper" color="danger">Seleccione un autor</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>N° Páginas:</ion-label>
+    <ion-input inputmode="number" placeholder="Ingresar..." slot="end" [(ngModel)]="paginas"></ion-input>
+    <ion-note *ngIf="!paginasValidado" slot="helper" color="danger">Ingrese el n° de paginas</ion-note>
+  </ion-item>
+</ion-list>
+
+<ion-button expand="full" (click)="guardar()">
+  <ion-icon name="save" slot="start"></ion-icon>
+  Guardar
+</ion-button>

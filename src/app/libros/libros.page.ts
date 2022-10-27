@@ -14,6 +14,7 @@ export class LibrosPage implements OnInit {
 
   public listaLibros: Libro[] = [];
   public cargandoLibros: boolean = false;
+  public modalVisible: boolean = false;
 
   constructor(
     private servicioLibros: LibrosService,
@@ -44,5 +45,9 @@ export class LibrosPage implements OnInit {
         }).then(toast => toast.present());
       })
     });
+  }
+
+  public nuevo(){
+    this.modalVisible = true;
   }
 }
