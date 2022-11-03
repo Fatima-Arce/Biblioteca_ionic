@@ -16,6 +16,8 @@ export class FormularioLibroComponent implements OnInit {
   @Output()
   recargar = new EventEmitter<boolean>();
 
+  public modo: "Registrar" | "Editar" = "Registrar";
+
   public listaAutores: Autor[] = [];
 
   public form: FormGroup = new FormGroup({
@@ -35,7 +37,7 @@ export class FormularioLibroComponent implements OnInit {
     this.servicioAutores.get().subscribe({
       next: (autores) => {
         this.listaAutores = autores;
-      }, 
+      },
       error: (e) => {
         console.error('Error al cargar Autores', e);
         this.serviceToast.create({
@@ -47,18 +49,22 @@ export class FormularioLibroComponent implements OnInit {
     })
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.cargarAutores();
   }
 
-  guardar(){
+  guardar() {
     this.form.markAllAsTouched();
-    if(this.form.valid){
-      this.registrar();
-    } 
+    if (this.form.valid){
+      if(this.modo === 'Registrar'){
+        this.registrar();
+      }else{
+        this.editar();
+      }
+    }
   }
 
-  private registrar(){
+  private registrar() {
     const libro: Libro = {
       id: this.form.controls.idCtrl.value,
       titulo: this.form.controls.tituloCtrl.value,
@@ -67,26 +73,58 @@ export class FormularioLibroComponent implements OnInit {
       autor: null
     }
 
-  this.servicioLibros.post(libro).subscribe({
-    next: () => {
-      this.recargar.emit(true);
-      this.serviceToast.create({
-        header: 'Exito',
-        message: 'Se registró correctamente el libro',
-        duration: 2000,
-        color: 'success'
-      }).then(t => t.present());
-    },
-    error: (e) => {
-      console.error('Error al registrar libro', e);
-      this.serviceToast.create({
-        header: 'Error al registrar',
-        message: e.error,
-        duration: 3500,
-        color: 'danger'
-      }).then(t => t.present());
+    this.servicioLibros.post(libro).subscribe({
+      next: () => {
+        this.recargar.emit(true);
+        this.serviceToast.create({
+          header: 'Exito',
+          message: 'Se registró correctamente el libro',
+          duration: 2000,
+          color: 'success'
+        }).then(t => t.present());
+      },
+      error: (e) => {
+        console.error('Error al registrar libro', e);
+        this.serviceToast.create({
+          header: 'Error al registrar',
+          message: e.error,
+          duration: 3500,
+          color: 'danger'
+        }).then(t => t.present());
+      }
+    });
+  }
+
+  private editar() {
+    const libro: Libro = {
+      id: this.form.controls.idCtrl.value,
+      titulo: this.form.controls.tituloCtrl.value,
+      idautor: this.form.controls.idautorCtrl.value,
+      paginas: this.form.controls.paginasCtrl.value,
+      autor: null
     }
-  });
+
+
+    this.servicioLibros.put(libro).subscribe({
+      next: () => {
+        this.recargar.emit(true);
+        this.serviceToast.create({
+          header: 'Exito',
+          message: 'Se editó correctamente el libro',
+          duration: 2000,
+          color: 'success'
+        }).then(t => t.present());
+      },
+      error: (e) => {
+        console.error('Error al editar libro', e);
+        this.serviceToast.create({
+          header: 'Error al editar',
+          message: e.error,
+          duration: 3500,
+          color: 'danger'
+        }).then(t => t.present());
+      }
+    });
   }
 
 }

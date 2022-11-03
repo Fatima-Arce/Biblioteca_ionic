@@ -20,9 +20,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-
   <ion-list>
-    <ion-item *ngFor="let libro of listaLibros">
+    <ion-item *ngFor="let libro of listaLibros" button (click)="editar(libro)">
       <ion-note slot="start">{{ libro.id }}</ion-note>
       <ion-label>
         <h2>{{ libro.titulo }}</h2>
@@ -32,11 +31,11 @@
     </ion-item>
   </ion-list>
 
-  <ion-modal [isOpen]="modalVisible" (didDismiss)="modalVisible = false">
+  <ion-modal [isOpen]="modalVisible" (didDismiss)="modalVisible = false" (didPresent)="cargarDatosEditar()">
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Registrar Libro</ion-title>
+          <ion-title>{{ modoFormulario }} Libro</ion-title>
           <ion-buttons slot="end" (click)="modalVisible = false">
             <ion-button>Cerrar</ion-button>
           </ion-buttons>
