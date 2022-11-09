@@ -10,7 +10,7 @@
 
 
 <ion-content>
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
     <ion-fab-button (click)="nuevo()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
@@ -21,14 +21,21 @@
   </ion-refresher>
 
   <ion-list>
-    <ion-item *ngFor="let libro of listaLibros" button (click)="editar(libro)">
-      <ion-note slot="start">{{ libro.id }}</ion-note>
-      <ion-label>
-        <h2>{{ libro.titulo }}</h2>
-        <p>{{ libro.autor }}</p>
-      </ion-label>
-      <ion-badge color="medium" slot="end">{{ libro.paginas }} pag.</ion-badge>
-    </ion-item>
+    <ion-item-sliding *ngFor="let libro of listaLibros">
+      <ion-item  button (click)="editar(libro)">
+        <ion-note slot="start">{{ libro.id }}</ion-note>
+        <ion-label>
+          <h2>{{ libro.titulo }}</h2>
+          <p>{{ libro.autor }}</p>
+        </ion-label>
+        <ion-badge color="medium" slot="end">{{ libro.paginas }} pag.</ion-badge>
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option color="danger">
+          <ion-icon slot="icon-only" name="trash" (click)="confirmarEliminacion(libro)"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>  
   </ion-list>
 
   <ion-modal [isOpen]="modalVisible" (didDismiss)="modalVisible = false" (didPresent)="cargarDatosEditar()">
